@@ -1,0 +1,135 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Unify HTML",
+  "scopeName": "text.html.unify",
+  "patterns": [
+    {
+      "include": "#unify-includes"
+    },
+    {
+      "include": "#unify-templates"
+    },
+    {
+      "include": "#unify-slots"
+    },
+    {
+      "include": "text.html.basic"
+    }
+  ],
+  "repository": {
+    "unify-includes": {
+      "patterns": [
+        {
+          "name": "meta.tag.include.unify",
+          "begin": "<!--#include\\s+",
+          "end": "-->",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.begin.html"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "patterns": [
+            {
+              "name": "entity.other.attribute-name.unify",
+              "match": "\\b(virtual|file)\\b"
+            },
+            {
+              "name": "string.quoted.double.html",
+              "begin": "\"",
+              "end": "\"",
+              "patterns": [
+                {
+                  "name": "constant.character.escape.html",
+                  "match": "\\\\."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "unify-templates": {
+      "patterns": [
+        {
+          "name": "meta.tag.template.unify",
+          "begin": "<(template)\\b",
+          "end": ">",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.begin.html"
+            },
+            "1": {
+              "name": "entity.name.tag.html"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "patterns": [
+            {
+              "name": "entity.other.attribute-name.unify",
+              "match": "\\b(extends|name)\\b"
+            },
+            {
+              "name": "string.quoted.double.html",
+              "begin": "\"",
+              "end": "\"",
+              "patterns": [
+                {
+                  "name": "constant.character.escape.html",
+                  "match": "\\\\."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "unify-slots": {
+      "patterns": [
+        {
+          "name": "meta.tag.slot.unify",
+          "begin": "<(slot)\\b",
+          "end": ">",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.begin.html"
+            },
+            "1": {
+              "name": "entity.name.tag.html"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "patterns": [
+            {
+              "name": "entity.other.attribute-name.unify",
+              "match": "\\b(name)\\b"
+            },
+            {
+              "name": "string.quoted.double.html",
+              "begin": "\"",
+              "end": "\"",
+              "patterns": [
+                {
+                  "name": "constant.character.escape.html",
+                  "match": "\\\\."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

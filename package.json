@@ -1,0 +1,163 @@
+{
+  "name": "unify-preview",
+  "displayName": "Unify Preview",
+  "description": "Live preview and development tools for Unify static sites",
+  "version": "0.1.0",
+  "publisher": "unify",
+  "license": "CC0-1.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "unify",
+    "static-site-generator",
+    "html",
+    "preview",
+    "live-reload"
+  ],
+  "activationEvents": [
+    "onLanguage:html",
+    "workspaceContains:**/*.html",
+    "workspaceContains:unify.config.*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "unify.openPreview",
+        "title": "Open Preview",
+        "category": "Unify",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "unify.refreshPreview",
+        "title": "Refresh Preview",
+        "category": "Unify",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "unify.previewToSide",
+        "title": "Open Preview to the Side",
+        "category": "Unify",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "unify.previewToSide",
+          "when": "resourceExtname == .html && unify.isActive",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "unify.openPreview",
+          "when": "resourceExtname == .html && unify.isActive",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "unify.openPreview",
+          "when": "resourceExtname == .html && unify.isActive",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "unify.openPreview",
+        "key": "ctrl+shift+p",
+        "mac": "cmd+shift+p",
+        "when": "editorTextFocus && resourceExtname == .html"
+      }
+    ],
+    "configuration": {
+      "title": "Unify",
+      "properties": {
+        "unify.preview.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically refresh preview when files change"
+        },
+        "unify.preview.debounceDelay": {
+          "type": "number",
+          "default": 200,
+          "description": "Delay in milliseconds before refreshing preview after changes"
+        },
+        "unify.preview.openToSide": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open preview in a new column"
+        },
+        "unify.sourceDirectory": {
+          "type": "string",
+          "default": "src",
+          "description": "Source directory for Unify files"
+        },
+        "unify.includesDirectory": {
+          "type": "string",
+          "default": "includes",
+          "description": "Directory name for include files"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "unify-html",
+        "aliases": [
+          "Unify HTML",
+          "unify"
+        ],
+        "extensions": [
+          ".html"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "unify-html",
+        "scopeName": "text.html.unify",
+        "path": "./syntaxes/unify-html.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "dependencies": {
+    "@fwdslsh/unify": "file:../cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fwdslsh/unify.git",
+    "directory": "vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/fwdslsh/unify/issues"
+  },
+  "homepage": "https://github.com/fwdslsh/unify#readme"
+}
